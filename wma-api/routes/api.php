@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -25,5 +25,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'profile']);
+    Route::put('/change-name', [ProfileController::class, 'changeName']);
+    Route::put('/change-email', [ProfileController::class, 'changeEmail']);
+    Route::put('/change-phone', [ProfileController::class, 'changePhone']);
+    Route::put('/change-password', [ProfileController::class, 'changePassword']);
+    Route::put('/change-status', [ProfileController::class, 'changeStatus']);
 
 });

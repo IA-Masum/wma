@@ -80,7 +80,7 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $validation = Validator::make($request->all(), [
-            'emil' => ['required', 'email', 'unique:users,email,' . $user->id]
+            'email' => ['required', 'email', 'unique:users,email,' . $user->id]
         ], [
             'required' => ':attribute is Required!',
             'string' => ':attribute Must be Text!'
@@ -109,6 +109,44 @@ class ProfileController extends Controller
         return $res;
     }
 
+    public function changePhone(Request $request)
+    {
+        $res = [
+            'status' => false,
+            'data' => null,
+            'message' => ""
+        ];
+
+        $user = Auth::user();
+
+        $validation = Validator::make($request->all(), [
+            'phone' => ['required', 'unique:users,phone,' . $user->id]
+        ], [
+            'required' => ':attribute is Required!',
+        ], [
+            'phone' => 'Phone',
+        ]);
+
+        if ($validation->fails()) {
+            $res['message'] = $validation->errors()->first();
+        } else {
+
+            if ($user) {
+                $user->phone = $request->phone;
+                $user->save();
+
+
+                $res['status'] = true;
+                $res['data'] = $user;
+                $res['message'] = "Phone Change Success!";
+            } else {
+                $res['message'] = "Unauthorized";
+                return response($res, 409);
+            }
+        }
+
+        return $res;
+    }
 
     public function changePassword(Request $request)
     {
@@ -137,9 +175,9 @@ class ProfileController extends Controller
 
             if ($user) {
 
-                $check = Hash::check($$request->old_password, $user->password);
+                $check = Hash::check($request->old_password, $user->password);
 
-                if ($check) {
+                if (!$check) {
                     $res['message'] = "Credentials Didn't Match!";
                 } else {
 
@@ -158,4 +196,46 @@ class ProfileController extends Controller
 
         return $res;
     }
+
+
+    public function changeStatus(Request $request)
+    {
+        $res = [
+            'status' => false,
+            'data' => null,
+            'message' => ""
+        ];
+
+        $user = Auth::user();
+
+        $validation = Validator::make($request->all(), [
+            'status' => ['required']
+        ], [
+            'required' => ':attribute is Required!',
+        ], [
+            'status' => 'Status',
+        ]);
+
+        if ($validation->fails()) {
+            $res['message'] = $validation->errors()->first();
+        } else {
+
+            if ($user) {
+                $user->status = $request->status;
+                $user->save();
+
+
+                $res['status'] = true;
+                $res['data'] = $user;
+                $res['message'] = "Status Change Success!";
+            } else {
+                $res['message'] = "Unauthorized";
+                return response($res, 409);
+            }
+        }
+
+        return $res;
+    }
+
+
 }
