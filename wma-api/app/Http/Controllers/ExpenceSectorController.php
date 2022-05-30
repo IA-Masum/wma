@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\LoanSector;
+
+use App\Models\ExpenceSector;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class LoanSectorController extends Controller
+class ExpenceSectorController extends Controller
 {
-    public function addLoanSector(Request $request)
+    public function addExpenceSector(Request $request)
     {
         $res = [
             'status' => false,
@@ -37,13 +38,13 @@ class LoanSectorController extends Controller
             } else {
                 $request->merge(['user_id' => $user->id]);
 
-                $loan_sector = LoanSector::create($request->all());
-                if ($loan_sector) {
+                $expence_sector = ExpenceSector::create($request->all());
+                if ($expence_sector) {
                     $res['status'] = true;
-                    $res['data'] = $loan_sector;
-                    $res['message'] = "Add LoanSector Success!";
+                    $res['data'] = $expence_sector;
+                    $res['message'] = "Add ExpenceSector Success!";
                 } else {
-                    $res['message'] = "Add LoanSector Faild!";
+                    $res['message'] = "Add ExpenceSector Faild!";
                 }
             }
         }
@@ -51,7 +52,7 @@ class LoanSectorController extends Controller
         return $res;
     }
 
-    public function showSingleLoanSector($id)
+    public function showSingleExpenceSector($id)
     {
         $res = [
             'status' => false,
@@ -66,21 +67,21 @@ class LoanSectorController extends Controller
             return response($res, 401);
         } else {
 
-            $loan_sector = LoanSector::where('user_id', $user->id)->where('id', $id)->first();
+            $expence_sector = ExpenceSector::where('user_id', $user->id)->where('id', $id)->first();
 
-            if (!$loan_sector) {
-                $res['message'] = "LoanSector Not Found!";
+            if (!$expence_sector) {
+                $res['message'] = "ExpenceSector Not Found!";
             } else {
                 $res['status'] = true;
-                $res['message'] = 'LoanSector Load Success!';
+                $res['message'] = 'ExpenceSector Load Success!';
             }
-            $res['data'] = $loan_sector;
+            $res['data'] = $expence_sector;
         }
 
         return $res;
     }
 
-    public function showAllLoanSectors()
+    public function showAllExpenceSectors()
     {
         $res = [
             'status' => false,
@@ -95,21 +96,21 @@ class LoanSectorController extends Controller
             return response($res, 401);
         } else {
 
-            $loan_sectors = LoanSector::where('user_id', $user->id)->get();
+            $expence_sectors = ExpenceSector::where('user_id', $user->id)->get();
 
-            if (count($loan_sectors) <= 0) {
-                $res['message'] = "No LoanSector Available!";
+            if (count($expence_sectors) <= 0) {
+                $res['message'] = "No ExpenceSector Available!";
             } else {
-                $res['message'] = 'LoanSectors Load Success!';
+                $res['message'] = 'ExpenceSectors Load Success!';
             }
             $res['status'] = true;
-            $res['data'] = $loan_sectors;
+            $res['data'] = $expence_sectors;
         }
 
         return $res;
     }
 
-    public function updateLoanSector(Request $request,  $id)
+    public function updateExpenceSector(Request $request,  $id)
     {
         $res = [
             'status' => false,
@@ -136,17 +137,17 @@ class LoanSectorController extends Controller
             if ($validation->fails()) {
                 $res['message'] = $validation->errors()->first();
             } else {
-                $loan_sector = LoanSector::where('user_id', $user->id)->where('id', $id)->first();
+                $expence_sector = ExpenceSector::where('user_id', $user->id)->where('id', $id)->first();
 
-                if (!$loan_sector) {
-                    $res['message'] = "LoanSector Not Found!";
+                if (!$expence_sector) {
+                    $res['message'] = "ExpenceSector Not Found!";
                 } else {
-                    $loan_sector->name = $request->name;
-                    $loan_sector->save();
+                    $expence_sector->name = $request->name;
+                    $expence_sector->save();
 
                     $res['status'] = true;
-                    $res['data'] = $loan_sector;
-                    $res['message'] = 'LoanSector Update Success!';
+                    $res['data'] = $expence_sector;
+                    $res['message'] = 'ExpenceSector Update Success!';
                 }
             }
         }
@@ -154,7 +155,7 @@ class LoanSectorController extends Controller
         return $res;
     }
 
-    public function deleteLoanSector($id)
+    public function deleteExpenceSector($id)
     {
         $res = [
             'status' => false,
@@ -169,19 +170,19 @@ class LoanSectorController extends Controller
             return response($res, 401);
         } else {
 
-            $loan_sector = LoanSector::where('user_id', $user->id)->where('id', $id)->first();
+            $expence_sector = ExpenceSector::where('user_id', $user->id)->where('id', $id)->first();
 
-            if (!$loan_sector) {
-                $res['message'] = "LoanSector Not Found!";
+            if (!$expence_sector) {
+                $res['message'] = "ExpenceSector Not Found!";
             } else {
-                $data = $loan_sector;
-                $loan_sector->delete();
+                $data = $expence_sector;
+                $expence_sector->delete();
 
                 $res['status'] = true;
                 $res['data'] = $data;
-                $res['message'] = 'LoanSector Delete Success!';
+                $res['message'] = 'ExpenceSector Delete Success!';
             }
-            $res['data'] = $loan_sector;
+            $res['data'] = $expence_sector;
         }
 
         return $res;

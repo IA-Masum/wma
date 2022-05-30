@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('income_sectors', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('name', 45);
+            $table->string('name');
             $table->timestamps();
 
             $table->index('user_id');

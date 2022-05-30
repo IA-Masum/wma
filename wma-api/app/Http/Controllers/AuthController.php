@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\WalletStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -42,11 +43,13 @@ class AuthController extends Controller
 
             $user = User::create($request->all());
 
-            // $user->create
 
             if ($user) {
-                $token = $user->createToken("AccessToken");
 
+                $walletStatus = WalletStatus::create(['user_id' => $user->id, 'balance' => 0, 'loan' => 0, 'savings' => 0,'lend' => 0]);
+
+                $token = $user->createToken("AccessToken");
+                
                 $res['status'] = true;
                 $res['data'] = [
                     'user' => $user,
@@ -68,8 +71,6 @@ class AuthController extends Controller
             'message' => "",
             'data' => null
         ];
-
-        // dd($request->header('Authorization'));
 
         if ($request->header('Authorization')) {
             $res['message'] = "You Already Logged In!";

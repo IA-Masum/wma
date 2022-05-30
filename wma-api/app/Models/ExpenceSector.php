@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WalletStatus extends Model
+class ExpenceSector extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'balance', 'loan', 'savings', 'lend'];
+    protected $fillable = ['name', 'user_id'];
 }

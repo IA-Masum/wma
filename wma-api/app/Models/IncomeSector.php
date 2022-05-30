@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class IncomeSector extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'user_id'];
 }

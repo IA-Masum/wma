@@ -34,4 +34,15 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $with = ['currentWallet'];
+
+    public function currentWallet (){
+        return $this->hasOne(WalletStatus::class)->latestOfMany();
+    }
+
+    public function walletHistory()
+    {
+        return $this->hasMany(WalletStatus::class);
+    }
+
 }

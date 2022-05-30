@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('wallet_statuses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->float('ballance');
+            $table->float('balance');
             $table->float('savings');
             $table->float('loan');
             $table->float('lend');
