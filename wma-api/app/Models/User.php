@@ -45,4 +45,9 @@ class User extends Authenticatable
         return $this->hasMany(WalletStatus::class);
     }
 
+    public function incomes()
+    {
+        return $this->hasMany(Income::class);
+    }
+
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExpenceSectorController;
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\IncomeSectorController;
 use App\Http\Controllers\LoanSectorController;
 use App\Http\Controllers\ProfileController;
@@ -42,6 +43,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/update-income-sector/{id}', [IncomeSectorController::class, 'updateIncomeSector']);
     Route::delete('/delete-income-sector/{id}', [IncomeSectorController::class, 'deleteIncomeSector']);
 
+    // Income Routes
+    Route::get('/income-history', [IncomeController::class, 'income-history']);
+    Route::post('/add-income', [IncomeController::class, 'addIncome']);
+    Route::delete('/delete-income/{id}', [IncomeController::class, 'deleteIncome']);
+    Route::delete('/delete-income-history', [IncomeController::class, 'deleteIncomeHistory']);
+    // Route::get('/show-single-income-sector/{id}', [IncomeController::class, 'showSingleIncomeSector']);
+    // Route::get('/show-all-income-sectors', [IncomeController::class, 'showAllIncomeSectors']);
+    // Route::put('/update-income-sector/{id}', [IncomeController::class, 'updateIncomeSector']);
+    // Route::delete('/delete-income-sector/{id}', [IncomeController::class, 'deleteIncomeSector']);
+
     // Expence Sector Routes
     Route::post('/add-expence-sector', [ExpenceSectorController::class, 'addExpenceSector']);
     Route::get('/show-single-expence-sector/{id}', [ExpenceSectorController::class, 'showSingleExpenceSector']);
@@ -55,12 +66,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/show-all-loan-sectors', [LoanSectorController::class, 'showAllLoanSectors']);
     Route::put('/update-loan-sector/{id}', [LoanSectorController::class, 'updateLoanSector']);
     Route::delete('/delete-loan-sector/{id}', [LoanSectorController::class, 'deleteLoanSector']);
-  
+
     // Savings Sector Routes
     Route::post('/add-saving-sector', [SavingSectorController::class, 'addSavingSector']);
     Route::get('/show-single-saving-sector/{id}', [SavingSectorController::class, 'showSingleSavingSector']);
     Route::get('/show-all-saving-sectors', [SavingSectorController::class, 'showAllSavingSectors']);
     Route::put('/update-saving-sector/{id}', [SavingSectorController::class, 'updateSavingSector']);
     Route::delete('/delete-saving-sector/{id}', [SavingSectorController::class, 'deleteSavingSector']);
-
 });
