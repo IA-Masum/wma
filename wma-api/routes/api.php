@@ -6,6 +6,7 @@ use App\Http\Controllers\ExpenceSectorController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\IncomeSectorController;
 use App\Http\Controllers\LendController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoanSectorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SavingSectorController;
@@ -71,13 +72,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/update-loan-sector/{id}', [LoanSectorController::class, 'updateLoanSector']);
     Route::delete('/delete-loan-sector/{id}', [LoanSectorController::class, 'deleteLoanSector']);
 
+    // Loan Routes
+    Route::get('/loan-history', [LoanController::class, 'loanHistory']);
+    Route::post('/add-loan', [LoanController::class, 'addLoan']);
+    Route::delete('/delete-loan/{id}', [LoanController::class, 'deleteLoan']);
+    Route::delete('/delete-loan-history', [LoanController::class, 'deleteLoanHistory']);
+    Route::post('/give-loan-installment', [LoanController::class, 'giveInstallment']);
+
     // Savings Sector Routes
     Route::post('/add-saving-sector', [SavingSectorController::class, 'addSavingSector']);
     Route::get('/show-single-saving-sector/{id}', [SavingSectorController::class, 'showSingleSavingSector']);
     Route::get('/show-all-saving-sectors', [SavingSectorController::class, 'showAllSavingSectors']);
     Route::put('/update-saving-sector/{id}', [SavingSectorController::class, 'updateSavingSector']);
     Route::delete('/delete-saving-sector/{id}', [SavingSectorController::class, 'deleteSavingSector']);
-
 
     // Lend Routes
     Route::get('/lend-history', [LendController::class, 'lendHistory']);

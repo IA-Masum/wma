@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('loan_sector_id');
             $table->string('source');
             $table->string('status', 8)->default('Unpaid'); // Paid, Unpaid
-            $table->string('purpose', 100); // Paid, Unpaid
+            $table->string('purpose', 100);
             $table->float('amount');
             $table->float('paid_amount')->default(0);
             $table->string('target_paid_date')->nullable();
