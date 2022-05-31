@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Saving extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'saving_sector_id', 'amount', 'authority'];
 }

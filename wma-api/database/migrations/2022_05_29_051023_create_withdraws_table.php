@@ -23,7 +23,9 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index('user_id');
+            $table->index('saving_id');
             $table->foreign('user_id')->on('users')->references('id');
+            $table->foreign('saving_id')->on('savings')->references('id')->onDelete('cascade');
         });
     }
 

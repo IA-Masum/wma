@@ -62,7 +62,7 @@ class LoanController extends Controller
             $validation = Validator::make($request->all(), [
                 'loan_sector_id' => 'required|integer',
                 'amount' => 'required|numeric',
-                'source' => 'required|max:45|string',
+                'authority' => 'required|max:45|string',
                 'purpose' => 'required|string'
             ], [
                 'required' => ':attribute is Required!',
@@ -72,7 +72,7 @@ class LoanController extends Controller
                 'person' => 'Person',
                 'amount' => "Amount",
                 'loan_sector_id' => "Loan Sector",
-                'source' => "Source",
+                'authority' => "Source",
                 'purpose' => 'Purpose'
             ]);
 
@@ -230,7 +230,7 @@ class LoanController extends Controller
                     if ($loan->status === 'Paid') {
                         $res['message'] = "Loan Already Paid!";
                     } else {
-                        $request->merge(['user_id' => $user->id, 'type' => "Loan", 'loan_id' => $loan->id]);
+                        $request->merge(['user_id' => $user->id, 'type' => "Loan"]);
                         $installment = Installment::create($request->all());
                         if ($installment) {
                             $paid_amount = $loan->paid_amount + $installment->amount;
@@ -252,7 +252,7 @@ class LoanController extends Controller
                                     'balance' => $wallet->balance - $installment->amount,
                                     'lend' => $wallet->lend,
                                     'savings' => $wallet->savings,
-                                    'loan' => $wallet->loan - $loan->amount
+                                    'loan' => $wallet->loan - $installment->amount
                                 ]);
                             } else {
                                 $wallet->loan = $wallet->loan - $installment->amount;

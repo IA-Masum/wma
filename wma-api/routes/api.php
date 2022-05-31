@@ -9,6 +9,7 @@ use App\Http\Controllers\LendController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\LoanSectorController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SavingController;
 use App\Http\Controllers\SavingSectorController;
 use Illuminate\Support\Facades\Route;
 
@@ -85,6 +86,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/show-all-saving-sectors', [SavingSectorController::class, 'showAllSavingSectors']);
     Route::put('/update-saving-sector/{id}', [SavingSectorController::class, 'updateSavingSector']);
     Route::delete('/delete-saving-sector/{id}', [SavingSectorController::class, 'deleteSavingSector']);
+
+    // Saving Routes
+    Route::get('/saving-history', [SavingController::class, 'savingHistory']);
+    Route::post('/add-saving', [SavingController::class, 'addSaving']);
+    Route::delete('/delete-saving/{id}', [SavingController::class, 'deleteSaving']);
+    Route::delete('/delete-saving-history', [SavingController::class, 'deleteSavingHistory']);
+    Route::post('/give-saving-installment', [SavingController::class, 'giveInstallment']);
+    Route::post('/withdraw-saving', [SavingController::class, 'withDraw']);
 
     // Lend Routes
     Route::get('/lend-history', [LendController::class, 'lendHistory']);

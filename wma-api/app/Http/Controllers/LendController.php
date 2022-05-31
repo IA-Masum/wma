@@ -230,7 +230,7 @@ class LendController extends Controller
                     if ($lend->status === 'Paid') {
                         $res['message'] = "Lend Already Paid!";
                     } else {
-                        $request->merge(['user_id' => $user->id, 'type' => "Lend", 'lend_id' => $lend->id]);
+                        $request->merge(['user_id' => $user->id, 'type' => "Lend"]);
                         $installment = Installment::create($request->all());
                         if ($installment) {
                             $paid_amount = $lend->paid_amount + $installment->amount;

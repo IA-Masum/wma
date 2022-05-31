@@ -26,7 +26,10 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index('user_id');
+            $table->index('saving_sector_id');
+            
             $table->foreign('user_id')->on('users')->references('id');
+            $table->foreign('saving_sector_id')->on('saving_sectors')->references('id');
         });
     }
 

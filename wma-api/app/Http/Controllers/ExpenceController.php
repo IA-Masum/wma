@@ -64,7 +64,6 @@ class ExpenceController extends Controller
             $validation = Validator::make($request->all(), [
                 'amount' => 'required|numeric',
                 'expence_sector_id' => 'required',
-                'source' => 'required',
             ], [
                 'required' => ':attribute is Required!',
                 'string' => ':attribute Must Be Text!',
@@ -72,7 +71,7 @@ class ExpenceController extends Controller
             ], [
                 'name' => 'Name',
                 'expence_sector_id' => "Expence Sector",
-                'source' => "Source",
+                'amount' => 'Amount'
             ]);
 
             if ($validation->fails()) {
