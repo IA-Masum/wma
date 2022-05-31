@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Installment extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'type', 'amount', 'lend_id', 'loan_id', 'saving_id'];
 }

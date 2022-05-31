@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExpenceController;
 use App\Http\Controllers\ExpenceSectorController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\IncomeSectorController;
+use App\Http\Controllers\LendController;
 use App\Http\Controllers\LoanSectorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SavingSectorController;
@@ -44,14 +46,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/delete-income-sector/{id}', [IncomeSectorController::class, 'deleteIncomeSector']);
 
     // Income Routes
-    Route::get('/income-history', [IncomeController::class, 'income-history']);
+    Route::get('/income-history', [IncomeController::class, 'incomeHistory']);
     Route::post('/add-income', [IncomeController::class, 'addIncome']);
     Route::delete('/delete-income/{id}', [IncomeController::class, 'deleteIncome']);
     Route::delete('/delete-income-history', [IncomeController::class, 'deleteIncomeHistory']);
-    // Route::get('/show-single-income-sector/{id}', [IncomeController::class, 'showSingleIncomeSector']);
-    // Route::get('/show-all-income-sectors', [IncomeController::class, 'showAllIncomeSectors']);
-    // Route::put('/update-income-sector/{id}', [IncomeController::class, 'updateIncomeSector']);
-    // Route::delete('/delete-income-sector/{id}', [IncomeController::class, 'deleteIncomeSector']);
 
     // Expence Sector Routes
     Route::post('/add-expence-sector', [ExpenceSectorController::class, 'addExpenceSector']);
@@ -59,6 +57,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/show-all-expence-sectors', [ExpenceSectorController::class, 'showAllExpenceSectors']);
     Route::put('/update-expence-sector/{id}', [ExpenceSectorController::class, 'updateExpenceSector']);
     Route::delete('/delete-expence-sector/{id}', [ExpenceSectorController::class, 'deleteExpenceSector']);
+
+    // Expence Routes
+    Route::get('/expence-history', [ExpenceController::class, 'expenceHistory']);
+    Route::post('/add-expence', [ExpenceController::class, 'addExpence']);
+    Route::delete('/delete-expence/{id}', [ExpenceController::class, 'deleteExpence']);
+    Route::delete('/delete-expence-history', [ExpenceController::class, 'deleteExpenceHistory']);
 
     // Loan Sector Routes
     Route::post('/add-loan-sector', [LoanSectorController::class, 'addLoanSector']);
@@ -73,4 +77,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/show-all-saving-sectors', [SavingSectorController::class, 'showAllSavingSectors']);
     Route::put('/update-saving-sector/{id}', [SavingSectorController::class, 'updateSavingSector']);
     Route::delete('/delete-saving-sector/{id}', [SavingSectorController::class, 'deleteSavingSector']);
+
+
+    // Lend Routes
+    Route::get('/lend-history', [LendController::class, 'lendHistory']);
+    Route::post('/add-lend', [LendController::class, 'addLend']);
+    Route::delete('/delete-lend/{id}', [LendController::class, 'deleteLend']);
+    Route::delete('/delete-lend-history', [LendController::class, 'deleteLendHistory']);
+    Route::post('/give-lend-installment', [LendController::class, 'giveInstallment']);
 });

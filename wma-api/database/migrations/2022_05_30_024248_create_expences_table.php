@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('expences', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('expence_sector_id');
             $table->float('amount');
-            $table->string('source');
             $table->string('note')->nullable();
             $table->timestamps();
 

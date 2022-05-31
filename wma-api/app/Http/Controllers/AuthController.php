@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ExpenceSector;
+use App\Models\IncomeSector;
+use App\Models\LoanSector;
+use App\Models\SavingSector;
 use App\Models\User;
 use App\Models\WalletStatus;
 use Illuminate\Http\Request;
@@ -46,8 +50,32 @@ class AuthController extends Controller
 
             if ($user) {
 
-                $walletStatus = WalletStatus::create(['user_id' => $user->id, 'balance' => 0, 'loan' => 0, 'savings' => 0,'lend' => 0]);
+                WalletStatus::create(['user_id' => $user->id, 'balance' => 0, 'loan' => 0, 'savings' => 0,'lend' => 0]);
 
+                // Create Basic Income Sectors
+                IncomeSector::create(['user_id' => $user->id, 'name' => 'Salary']);
+                IncomeSector::create(['user_id' => $user->id, 'name' => 'Business Profite']);
+                IncomeSector::create(['user_id' => $user->id, 'name' => 'Sell Goods']);
+
+                 // Create Basic Expence Sectors
+                 ExpenceSector::create(['user_id' => $user->id, 'name' => 'Transport']);
+                 ExpenceSector::create(['user_id' => $user->id, 'name' => 'Education']);
+                 ExpenceSector::create(['user_id' => $user->id, 'name' => 'Food']);
+                 ExpenceSector::create(['user_id' => $user->id, 'name' => 'Electricity Bill']);
+                 ExpenceSector::create(['user_id' => $user->id, 'name' => 'Mobile Recharge']);
+
+                //  Create Basic Loan Sector
+                LoanSector::create(['user_id' => $user->id, 'name' => "Bank"]);
+                LoanSector::create(['user_id' => $user->id, 'name' => "NGO"]);
+                LoanSector::create(['user_id' => $user->id, 'name' => "Local Organisation"]);
+                LoanSector::create(['user_id' => $user->id, 'name' => "Person"]);
+
+                //  Create Basic Savings Sector
+                SavingSector::create(['user_id' => $user->id, 'name' => "Bank"]); 
+                SavingSector::create(['user_id' => $user->id, 'name' => "NGO"]);
+                SavingSector::create(['user_id' => $user->id, 'name' => "Local Organisation"]);
+                SavingSector::create(['user_id' => $user->id, 'name' => "Person"]);
+                
                 $token = $user->createToken("AccessToken");
                 
                 $res['status'] = true;

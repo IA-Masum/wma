@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Lend extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'person', 'amount'];
 }
