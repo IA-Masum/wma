@@ -16,11 +16,7 @@ import FullPageLoader from "../Components/FullPageLoader";
 const Welcome = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
 
-  const onPressHandler = () => {
-    navigation.navigate("NoInternet");
-  };
-
-  setTimeout(() => setLoading(false), 2000)
+  setTimeout(() => setLoading(false), 2000);
   return (
     <>
       <StatusBar style="light" />
@@ -33,7 +29,7 @@ const Welcome = ({ navigation }) => {
             <Text style={styles.textStyle}>Wallet Manager</Text>
 
             <TouchableOpacity
-              onPress={onPressHandler}
+              onPress={() => navigation.navigate("Register")}
               style={[
                 styles.btn,
                 { marginTop: 100, backgroundColor: colors.light },
@@ -44,6 +40,7 @@ const Welcome = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={() => navigation.navigate("LogIn")}
               style={[styles.btn, { backgroundColor: colors.dark2 }]}
             >
               <Text style={{ fontSize: 20, color: colors.white }}>Log In</Text>
