@@ -1,5 +1,7 @@
 <?php
 
+use App\Mail\VarificationEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $code = rand(100000, 999999);
+    // Mail::to('iamasum133@gmail.com')->send( new VarificationEmail($code));
+    return new VarificationEmail($code);
 });

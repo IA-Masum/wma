@@ -25,9 +25,11 @@ use Illuminate\Support\Facades\Route;
 */
 // Auth Routes
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/resend-code', [AuthController::class, 'resendCode']);
+Route::post('/varify-email', [AuthController::class, 'varifyEmail']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('is_varified');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'is_varified'])->group(function () {
 
     // Auth Route
     Route::post('/logout', [AuthController::class, 'logout']);

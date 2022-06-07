@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('varification_codes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('status')->default('Active'); // Active, Deactive, Suspended
-            $table->string('is_varified')->default('No'); // Yes, No
-            $table->string('password');
+            $table->string('email', 255);
+            $table->string('code', 6);
+            $table->string('expired_date');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('varification_codes');
     }
 };
