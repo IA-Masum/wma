@@ -78,6 +78,10 @@ class AuthController extends Controller
 
     public function resendCode(Request $request)
     {
+        $res = [
+            'status' => false,
+            'message' => ""
+        ];
         $find_user = User::where('email', $request->email)->first();
 
         if($find_user){
