@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/resend-code', [AuthController::class, 'resendCode']);
 Route::post('/varify-email', [AuthController::class, 'varifyEmail']);
-Route::post('/login', [AuthController::class, 'login'])->middleware('is_varified');
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum', 'is_varified'])->group(function () {
 
@@ -78,6 +78,7 @@ Route::middleware(['auth:sanctum', 'is_varified'])->group(function () {
     // Loan Routes
     Route::get('/loan-history', [LoanController::class, 'loanHistory']);
     Route::post('/add-loan', [LoanController::class, 'addLoan']);
+    Route::post('/add-old-loan', [LoanController::class, 'addOldLoan']);
     Route::delete('/delete-loan/{id}', [LoanController::class, 'deleteLoan']);
     Route::delete('/delete-loan-history', [LoanController::class, 'deleteLoanHistory']);
     Route::post('/give-loan-installment', [LoanController::class, 'giveInstallment']);
@@ -100,6 +101,7 @@ Route::middleware(['auth:sanctum', 'is_varified'])->group(function () {
     // Lend Routes
     Route::get('/lend-history', [LendController::class, 'lendHistory']);
     Route::post('/add-lend', [LendController::class, 'addLend']);
+    Route::post('/add-old-lend', [LendController::class, 'addOldLend']);
     Route::delete('/delete-lend/{id}', [LendController::class, 'deleteLend']);
     Route::delete('/delete-lend-history', [LendController::class, 'deleteLendHistory']);
     Route::post('/give-lend-installment', [LendController::class, 'giveInstallment']);

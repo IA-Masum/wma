@@ -116,6 +116,53 @@ class LendController extends Controller
         return $res;
     }
 
+    public function addOldLend(Request $request)
+    {
+
+        $res = [
+            'status' => false,
+            'data' => null,
+            'message' => ""
+        ];
+
+        $user = Auth::user();
+
+        if (!$user) {
+            $res['message'] = "Unauthorized";
+            return response($res, 401);
+        } else {
+
+            $validation = Validator::make($request->all(), [
+                'person' => 'required|string|max:45',
+                'amount' => 'required|numeric',
+            ], [
+                'required' => ':attribute is Required!',
+                'string' => ':attribute Must Be Text!',
+                'numeric' => ':attribute Must Be Number!'
+            ], [
+                'person' => 'Person',
+                'amount' => "Amount",
+            ]);
+
+            if ($validation->fails()) {
+                $res['message'] = $validation->errors()->first();
+            } else {
+                $request->merge(['user_id' => $user->id]);
+
+                $lend = Lend::create($request->all());
+                if ($lend) {
+                    $res['status'] = true;
+                    $res['data'] = $lend;
+                    $res['message'] = "Add Lend Success!";
+                } else {
+                    $res['message'] = "Add Lend Faild!";
+                }
+            }
+        }
+
+        return $res;
+    }
+
     public function deleteLend($id)
     {
 

@@ -117,9 +117,62 @@ class LoanController extends Controller
         return $res;
     }
 
-    public function deleteLoan($id)
+    public function addOldLoan(Request $request)
     {
 
+        $res = [
+            'status' => false,
+            'data' => null,
+            'message' => ""
+        ];
+
+        $user = Auth::user();
+
+        if (!$user) {
+            $res['message'] = "Unauthorized";
+            return response($res, 401);
+        } else {
+
+            $validation = Validator::make($request->all(), [
+                'loan_sector_id' => 'required|integer',
+                'amount' => 'required|numeric',
+                'authority' => 'required|max:45|string',
+                'purpose' => 'required|string'
+            ], [
+                'required' => ':attribute is Required!',
+                'string' => ':attribute Must Be Text!',
+                'numeric' => ':attribute Must Be Number!'
+            ], [
+                'person' => 'Person',
+                'amount' => "Amount",
+                'loan_sector_id' => "Loan Sector",
+                'authority' => "Source",
+                'purpose' => 'Purpose'
+            ]);
+
+            if ($validation->fails()) {
+                $res['message'] = $validation->errors()->first();
+            } else {
+                $request->merge(['user_id' => $user->id]);
+
+                $loan = Loan::create($request->all());
+
+                if ($loan) {
+
+                    $res['status'] = true;
+                    $res['data'] = $loan;
+                    $res['message'] = "Add Loan Success!";
+                } else {
+                    $res['message'] = "Add Loan Faild!";
+                }
+            }
+        }
+
+        return $res;
+    }
+
+    public function deleteLoan($id)
+    {
         $res = [
             'status' => false,
             'data' => null,
