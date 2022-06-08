@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { createContext, useState } from "react";
 import { Alert } from "react-native";
@@ -7,7 +8,7 @@ import { BASE_URL } from "../config";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showVarify, setShowVarify] = useState(false);
 
@@ -48,6 +49,7 @@ export const AuthProvider = ({ children }) => {
           setShowVarify(false);
           callback();
           setUserInfo(user);
+          AsyncStorage.setItem("userInfo", JSON.stringify(user));
 
           Alert.alert("Success", message);
         } else {
@@ -57,6 +59,7 @@ export const AuthProvider = ({ children }) => {
       .catch((err) => {
         setLoading(false);
         Alert.alert("Error!", "Server Error!");
+        console.log(err);
       });
   };
 
@@ -65,10 +68,12 @@ export const AuthProvider = ({ children }) => {
     axios
       .post(`${BASE_URL}/login`, { email, password })
       .then((res) => {
-        let { status, message } = res.data;
+        let { status, message, data } = res.data;
         setLoading(false);
         if (status) {
           callback();
+          setUserInfo(data.user);
+          AsyncStorage.setItem("userInfo", JSON.stringify(data.user));
           Alert.alert("Success!", message);
         } else {
           Alert.alert("Error!", message);
@@ -80,9 +85,27 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
+  const resendCode = (email, callback) => {
+    setLoading(true);
+
+    axios.post(`${BASE_URL}/resend-code`, {email}).then(res => {
+      let {status, message} = res.data;
+      setLoading(false);
+      if(status){
+        callback();
+        Alert.alert('Success!', message);
+      }else{
+        Alert.alert('Error!', message);
+      }
+    }).catch(e => {
+      setLoading(false);
+      Alert.alert('Error!', "Server Error!");
+    })
+  }
+
   return (
     <AuthContext.Provider
-      value={{ register, varifyEmail, loading, showVarify, login }}
+      value={{ register, varifyEmail, resendCode ,login, userInfo, showVarify, loading }}
     >
       {children}
     </AuthContext.Provider>

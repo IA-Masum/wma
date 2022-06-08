@@ -16,7 +16,7 @@ import FullPageLoader from "../Components/FullPageLoader";
 const Welcome = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
 
-  setTimeout(() => setLoading(false), 2000);
+  setTimeout(() => setLoading(false), 1000);
   return (
     <>
       <StatusBar style="light" />
@@ -35,15 +35,21 @@ const Welcome = ({ navigation }) => {
                 { marginTop: 100, backgroundColor: colors.light },
               ]}
             >
-              <Text style={{ fontSize: 20, color: colors.white }}>
+              <Text style={{ fontSize: 20, color: colors.white, textTransform: "uppercase" }}>
                 Register
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate("LogIn")}
+              style={[styles.btn, { backgroundColor: colors.light2 }]}
+            >
+              <Text style={{ fontSize: 20, color: colors.white , textTransform: "uppercase"}}>Log In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("VarifyEmail")}
               style={[styles.btn, { backgroundColor: colors.dark2 }]}
             >
-              <Text style={{ fontSize: 20, color: colors.white }}>Log In</Text>
+              <Text style={{ fontSize: 20, color: colors.white, textTransform: "uppercase" }}>Varify Email</Text>
             </TouchableOpacity>
           </View>
         </>

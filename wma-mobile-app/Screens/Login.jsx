@@ -11,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faDollar, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import colors from "../utils/colors";
 import validator from "validator";
 import { AuthContext } from "../Contexts/AuthContext";
