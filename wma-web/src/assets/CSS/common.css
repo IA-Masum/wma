@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+:root{
+  --color-light: #F806CC;
+  --color-light2: #A91079;
+  --color-dark2: #570A57;
+  --color-dark: #2E0249;
+}
+
+.wma-btn{
+  display: inline-block;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 30px;
+  outline: none;
+  color: white;
+  font-size: 1.3rem;
+  margin: 3px;
+  transition: .5s;
+  cursor: pointer;
+}
+
+.wma-btn:hover, .wma-btn:focus{
+  opacity: .8;
+}
+.wma-btn:disabled{
+  opacity: .2;
+  cursor: not-allowed;
+}
+
+
+.wma-btn-light{
+  background-color: var(--color-light);
+}
+
+.wma-btn-light2{
+  background-color: var(--color-light2);
+}
+.wma-btn-dark2{
+  background-color: var(--color-dark2);
+}
+.wma-btn-dark{
+  background-color: var(--color-dark);
+}
+

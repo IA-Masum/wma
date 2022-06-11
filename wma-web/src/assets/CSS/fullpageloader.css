@@ -1,0 +1,29 @@
+
+
+.full-page-loader{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .3);
+  color: #fff;
+  font-size: 2rem;
+  z-index: 999999;
+}
+
+.full-page-loader > svg{
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0%{
+    transform: initial;
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}

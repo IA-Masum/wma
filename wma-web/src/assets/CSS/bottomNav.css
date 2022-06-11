@@ -1,0 +1,27 @@
+.bottom-nav {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-dark2);
+  display: flex;
+  font-size: 1.3rem;
+  align-items: center;
+  font-weight: bold;
+  color: #fff;
+  z-index: 10;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.bottom-link{
+  width: 20%;
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 10px 0;
+}
+
+.bottom-link.active, .bottom-link:hover{
+  background-color: var(--color-dark);
+}
