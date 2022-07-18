@@ -26,6 +26,17 @@
   margin: 3px;
   transition: .5s;
   cursor: pointer;
+  min-width: 200px;
+  text-align: center;
+}
+
+.wma-btn-sm{
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: .8rem;
+  margin: 3px;
+  min-width: inherit;
+
 }
 
 .wma-btn:hover, .wma-btn:focus{
@@ -51,3 +62,110 @@
   background-color: var(--color-dark);
 }
 
+.wma-container-full{
+  width: 100%;
+  height: 100vh;
+  min-height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wma-container-full > svg{
+  color: var(--color-light);
+}
+
+.wma-color-light{
+  color: var(--color-light);
+}
+
+.wma-color-white{
+  color: #ddd;
+}
+
+.wma-bg-dark{
+  background-color: var(--color-dark);
+}
+
+.wma-bg-dark2{
+  background-color: var(--color-dark2);
+}
+.wma-bg-light{
+  background-color: var(--color-light);
+}
+
+.wma-bg-light2{
+  background-color: var(--color-light2);
+}
+
+.wma-bg-white{
+  background-color: #ddd;
+}
+
+.wma-mt-20{
+  margin-top: 20px;
+}
+
+.wma-my-20{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.input-group{
+  width: 80%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.input-group > label{
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+input{
+  background-color: rgba(255, 255, 255, 0.24);
+  border: var(--color-light2) solid 1px;
+  padding: 8px;
+  border-radius: 10px !important;
+  color: #ddd;
+  font-size: 17px;
+}
+
+input:focus{
+  border: solid var(--color-light) 1px;
+  outline: solid var(--color-light) 1px;
+}
+
+a{
+  color: var(--color-light);
+}
+
+.page{
+  margin-top: 60px;
+  min-height: calc(100vh - 116px);
+  padding-bottom: 60px;
+}
+
+.home-ballance > div{
+  font-size:3.5rem;
+  font-weight: bold;
+  color: rgb(58, 177, 58);
+}
+
+.home-loan, .home-lend{
+  font-size: 1.3rem;
+}
+
+.home-savings > div{
+  font-size:3.5rem;
+  font-weight: bold;
+  color: rgb(13, 49, 209);
+}
+
+canvas{
+  height: 300px !important;
+}

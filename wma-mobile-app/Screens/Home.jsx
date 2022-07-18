@@ -3,10 +3,11 @@ import React from "react";
 import {
   StyleSheet,
   SafeAreaView,
+  View,
 } from "react-native";
 
 
-function Home({ navigation }) {
+function Home() {
 
   const onPressHandler = () => {
 
@@ -15,12 +16,16 @@ function Home({ navigation }) {
   return (
     <>
       <StatusBar style="light" />
-      <SafeAreaView
+      <View
         style={[styles.container, styles.horizontal, styles.mainContainer]}
       >
+        <View style={styles.balanceContainer}>
+          <Text>your balance</Text>
+          <Text>200</Text>
+        </View>
         
        
-      </SafeAreaView>
+      </View>
     </>
   );
 }
@@ -29,17 +34,19 @@ export default Home;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    paddingTop: 50,
+    paddingTop: 200,
+    backgroundColor: 'red'
   },
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#2E0249",
     alignItems: "center",
   },
   horizontal: {
     flexDirection: "column",
     justifyContent: "center",
-    padding: 10,
+  },
+  balanceContainer:{
+    backgroundColor: 'red'  
   }
 });
