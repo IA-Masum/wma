@@ -1,20 +1,35 @@
 import { faEdit, faPenAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
-import { useState } from "react";
-import { useContext } from "react";
-import { Container, Modal } from "react-bootstrap";
+import { useState, useEffect, useContext } from "react";
+import { Container, FormGroup, Modal } from "react-bootstrap";
 import BottomNav from "../Components/BottomNav";
 import FullPageLoader from "../Components/FullPageLoader";
 import TopNav from "../Components/TopNav";
 import { AuthContext } from "../Contexts/AuthContext";
+import { ProfileContext } from "../Contexts/ProfileContext";
 
 function ProfilePage() {
-  const { user, changeName, changeEmail } = useContext(AuthContext);
+  const { user, loadUser, setUser } = useContext(AuthContext);
+  const { loading, changeName } = useContext(ProfileContext);
+
   const [showChangeNameModal, setShowChangeNameModal] = useState(false);
+
+  useEffect(() => {
+    if (!user) {
+      loadUser();
+    }
+  }, []);
+
+  const changeNameHandler = (data) => {
+    changeName(data, (user) => {
+      setUser(user);
+      setShowChangeNameModal(false);
+    });
+  };
   return (
     <>
-      {!user ? (
+      {!user || loading ? (
         <FullPageLoader />
       ) : (
         <>
@@ -33,7 +48,10 @@ function ProfilePage() {
                   User From: {moment(user.created_at).format("D MMM, y")}
                 </span>
                 <div className="mt-4">
-                  <button onClick={() => setShowChangeNameModal(true)} className="wma-btn wma-btn-dark wma-btn-sm">
+                  <button
+                    onClick={() => setShowChangeNameModal(true)}
+                    className="wma-btn wma-btn-dark wma-btn-sm"
+                  >
                     <FontAwesomeIcon icon={faEdit} className="me-1" /> Name
                   </button>
                   <button className="wma-btn wma-btn-dark wma-btn-sm">
@@ -47,7 +65,12 @@ function ProfilePage() {
             </Container>
           </div>
           <BottomNav />
-          <ChangeNameModal show={showChangeNameModal} />
+          <ChangeNameModal
+            show={showChangeNameModal}
+            changeNameHandler={changeNameHandler}
+            user={user}
+            setShowChangeNameModal={setShowChangeNameModal}
+          />
         </>
       )}
     </>
@@ -56,24 +79,48 @@ function ProfilePage() {
 
 export default ProfilePage;
 
-function ChangeNameModal(props) {
+function ChangeNameModal({
+  show,
+  setShowChangeNameModal,
+  user,
+  changeNameHandler,
+}) {
+  const [name, setName] = useState(user.name);
+  const onChangeHandler = (e) => {
+    setName(e.target.value);
+  };
+
   return (
-    <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered>
+    <Modal
+      show={show}
+      onHide={() => setShowChangeNameModal(false)}
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Change Name
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
+        <FormGroup>
+          <label htmlFor="name">User Name</label>
+          <input
+            type="text"
+            className="form-control mt-2"
+            id="name"
+            onChange={onChangeHandler}
+            value={name}
+          />
+        </FormGroup>
       </Modal.Body>
       <Modal.Footer>
-        <button>Save</button>
+        <button
+          onClick={() => changeNameHandler({name})}
+          className="btn btn-success w-100"
+        >
+          Save
+        </button>
       </Modal.Footer>
     </Modal>
   );
