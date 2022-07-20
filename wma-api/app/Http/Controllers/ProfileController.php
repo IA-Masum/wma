@@ -83,7 +83,7 @@ class ProfileController extends Controller
             'email' => ['required', 'email', 'unique:users,email,' . $user->id]
         ], [
             'required' => ':attribute is Required!',
-            'string' => ':attribute Must be Text!'
+            'email' => ':attribute Must be Valid!'
         ], [
             'email' => 'Email',
         ]);
