@@ -29,7 +29,7 @@ Route::post('/resend-code', [AuthController::class, 'resendCode']);
 Route::post('/varify-email', [AuthController::class, 'varifyEmail']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware(['auth:sanctum', 'is_varified'])->group(function () {
+// Route::middleware(['auth:sanctum', 'is_varified'])->group(function () {
 
     // Auth Route
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -105,4 +105,4 @@ Route::middleware(['auth:sanctum', 'is_varified'])->group(function () {
     Route::delete('/delete-lend/{id}', [LendController::class, 'deleteLend']);
     Route::delete('/delete-lend-history', [LendController::class, 'deleteLendHistory']);
     Route::post('/give-lend-installment', [LendController::class, 'giveInstallment']);
-});
+// });

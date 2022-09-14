@@ -51,8 +51,13 @@ function IncomeSectors() {
               </div>
 
               <hr />
-              <div className="bg-white">
-                <p>Hello</p>
+              <div className="bg-white p-2 rounded shadow-sm">
+                <p className="mb-0"><strong>Sallery S21</strong></p>
+                <div className="clearfix text-muted">
+
+                  <small className="float-start">From: July 2022</small>
+                  <small className="float-end">Total: 0 tk</small>
+                </div>
               </div>
             </Container>
           </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Income;
+use App\Models\IncomeSector;
 use App\Models\WalletStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -83,6 +84,11 @@ class IncomeController extends Controller
 
                 $income = Income::create($request->all());
                 if ($income) {
+
+                    $income_sector = IncomeSector::find($request->income_sector_id);
+
+                    $income_sector->total_income += $income->amount;
+                    $income_sector->save();
 
                     $wallet = $user->currentWallet;
 
