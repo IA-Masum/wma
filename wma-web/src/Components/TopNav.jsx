@@ -77,7 +77,7 @@ function TopNav() {
                     </li>
 
                     <li className="menu-list-item">
-                      <a href="#" className="menu-link">
+                      <a href="/income-sectors" className="menu-link">
                         <FontAwesomeIcon
                           icon={faDoorOpen}
                           style={{ marginRight: 10 }}

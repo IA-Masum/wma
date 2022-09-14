@@ -11,9 +11,12 @@ import { ProfileContext } from "../Contexts/ProfileContext";
 
 function ProfilePage() {
   const { user, loadUser, setUser } = useContext(AuthContext);
-  const { loading, changeName } = useContext(ProfileContext);
+  const { loading, changeName, changeEmail, changePassword } =
+    useContext(ProfileContext);
 
   const [showChangeNameModal, setShowChangeNameModal] = useState(false);
+  const [showChangeEmailModal, setShowChangeEmailModal] = useState(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -25,6 +28,20 @@ function ProfilePage() {
     changeName(data, (user) => {
       setUser(user);
       setShowChangeNameModal(false);
+    });
+  };
+
+  const changeEmailHandler = (data) => {
+    changeEmail(data, (user) => {
+      setUser(user);
+      setShowChangeEmailModal(false);
+    });
+  };
+
+  const changePasswordHandler = (data) => {
+    changePassword(data, (user) => {
+      setUser(user);
+      setShowChangePasswordModal(false);
     });
   };
   return (
@@ -54,11 +71,17 @@ function ProfilePage() {
                   >
                     <FontAwesomeIcon icon={faEdit} className="me-1" /> Name
                   </button>
-                  <button className="wma-btn wma-btn-dark wma-btn-sm">
+                  <button
+                    onClick={() => setShowChangeEmailModal(true)}
+                    className="wma-btn wma-btn-dark wma-btn-sm"
+                  >
                     <FontAwesomeIcon icon={faEdit} className="me-1" /> Email
                   </button>
-                  <button className="wma-btn wma-btn-dark wma-btn-sm">
-                    <FontAwesomeIcon icon={faEdit} className="me-1" /> Passowrd
+                  <button
+                    onClick={() => setShowChangePasswordModal(true)}
+                    className="wma-btn wma-btn-dark wma-btn-sm"
+                  >
+                    <FontAwesomeIcon icon={faEdit} className="me-1" /> Password
                   </button>
                 </div>
               </div>
@@ -70,6 +93,18 @@ function ProfilePage() {
             changeNameHandler={changeNameHandler}
             user={user}
             setShowChangeNameModal={setShowChangeNameModal}
+          />
+          <ChangeEmailModal
+            show={showChangeEmailModal}
+            changeEmailHandler={changeEmailHandler}
+            user={user}
+            setShowChangeEmailModal={setShowChangeEmailModal}
+          />
+
+          <ChangePasswordModal
+            show={showChangePasswordModal}
+            changePasswordHandler={changePasswordHandler}
+            setShowChangePasswordModal={setShowChangePasswordModal}
           />
         </>
       )}
@@ -116,7 +151,137 @@ function ChangeNameModal({
       </Modal.Body>
       <Modal.Footer>
         <button
-          onClick={() => changeNameHandler({name})}
+          onClick={() => changeNameHandler({ name })}
+          className="btn btn-success w-100"
+        >
+          Save
+        </button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
+function ChangeEmailModal({
+  show,
+  setShowChangeEmailModal,
+  user,
+  changeEmailHandler,
+}) {
+  const [email, setEmail] = useState(user.email);
+  const onChangeHandler = (e) => {
+    setEmail(e.target.value);
+  };
+
+  return (
+    <Modal
+      show={show}
+      onHide={() => setShowChangeEmailModal(false)}
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Change Email
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <FormGroup>
+          <label htmlFor="email">New Email</label>
+          <input
+            type="email"
+            className="form-control mt-2"
+            id="email"
+            onChange={onChangeHandler}
+            value={email}
+          />
+        </FormGroup>
+      </Modal.Body>
+      <Modal.Footer>
+        <button
+          onClick={() => changeEmailHandler({ email })}
+          className="btn btn-success w-100"
+        >
+          Save
+        </button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
+function ChangePasswordModal({
+  show,
+  setShowChangePasswordModal,
+  changePasswordHandler,
+}) {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordCon, setNewPasswordCon] = useState("");
+  const onOldChangeHandler = (e) => {
+    setOldPassword(e.target.value);
+  };
+
+  const onNewChangeHandler = (e) => {
+    setNewPassword(e.target.value);
+  };
+  const onConChangeHandler = (e) => {
+    setNewPasswordCon(e.target.value);
+  };
+
+  return (
+    <Modal
+      show={show}
+      onHide={() => setShowChangePasswordModal(false)}
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Change Password
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <FormGroup>
+          <label htmlFor="old_password">Old Password</label>
+          <input
+            type="password"
+            className="form-control mt-2"
+            id="old_password"
+            onChange={onOldChangeHandler}
+            value={oldPassword}
+          />
+        </FormGroup>
+        <FormGroup>
+          <label htmlFor="new_password">New Password</label>
+          <input
+            type="password"
+            className="form-control mt-2"
+            id="new_password"
+            onChange={onNewChangeHandler}
+            value={newPassword}
+          />
+        </FormGroup>
+        <FormGroup>
+          <label htmlFor="new_password_confirmation">
+            New Password Confirm
+          </label>
+          <input
+            type="password"
+            className="form-control mt-2"
+            id="new_password_confirmation"
+            onChange={onConChangeHandler}
+            value={newPasswordCon}
+          />
+        </FormGroup>
+      </Modal.Body>
+      <Modal.Footer>
+        <button
+          onClick={() =>
+            changePasswordHandler({
+              old_password: oldPassword,
+              new_password: newPassword,
+              new_password_confirmation: newPasswordCon,
+            })
+          }
           className="btn btn-success w-100"
         >
           Save

@@ -17,7 +17,7 @@ function App() {
     
     <>
       <AppProviders/>
-      <ToastContainer autoClose={2500} position="top-center" />
+      <ToastContainer autoClose={500} position="top-center" />
     </>
   );
 }
