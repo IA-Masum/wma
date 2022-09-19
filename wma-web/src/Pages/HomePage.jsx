@@ -4,6 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
 import FullPageLoader from "../Components/FullPageLoader";
 import { Col, Container, Row } from "react-bootstrap";
+import { Chart as ChartJS } from 'chart.js/auto'
+import { Chart }            from 'react-chartjs-2'
 import { Bar } from "react-chartjs-2";
 
 function HomePage() {
@@ -66,14 +68,14 @@ function HomePage() {
 
               <Row>
                 <div className="col-6 my-2">
-                  <div className="border  home-loan rounded shadow-sm p-4 mt-3 bg-white text-danger text-center">
+                  <div className="border  home-loan rounded shadow-sm p-4 bg-white text-danger text-center">
                     <strong>Loans</strong>
                     <div>{user.current_wallet.loan}</div>
                   </div>
                 </div>
 
                 <div className="col-6 my-2">
-                  <div className="border home-lend  rounded text-info shadow-sm p-4 mt-3 bg-white text-center">
+                  <div className="border home-lend  rounded text-info shadow-sm p-4 bg-white text-center">
                     <strong>Lends</strong>
                     <div>{user.current_wallet.lend}</div>
                   </div>
@@ -82,7 +84,7 @@ function HomePage() {
 
               <Row>
                 <Col sm={6} md={4} lg={3}>
-                  <div className="home-savings border rounded shadow-sm p-4 mt-3 bg-white text-center">
+                  <div className="home-savings border rounded shadow-sm p-4 bg-white text-center">
                     <strong>Your Savings</strong>
                     <div>{user.current_wallet.savings}</div>
                   </div>

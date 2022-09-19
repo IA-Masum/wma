@@ -1,5 +1,6 @@
 import AppRoutes from "./AppRoutes";
 import { AuthProvider } from "./Contexts/AuthContext";
+import { IncomeSectorProvider } from "./Contexts/IncomeSectorContext";
 import { ProfileProvider } from "./Contexts/ProfileContext";
 
 function AppProviders() {
@@ -7,7 +8,9 @@ function AppProviders() {
     <>
       <AuthProvider>
         <ProfileProvider>
-          <AppRoutes />
+          <IncomeSectorProvider>
+            <AppRoutes />
+          </IncomeSectorProvider>
         </ProfileProvider>
       </AuthProvider>
     </>
