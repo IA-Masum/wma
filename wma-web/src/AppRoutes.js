@@ -5,6 +5,8 @@ import Incomes from "./Pages/Incomes";
 import Login from "./Pages/Login";
 import ProfilePage from "./Pages/ProfilePage";
 import Register from "./Pages/Register";
+import ExpenceSectors from "./Pages/ExpenceSectors";
+import Expences from "./Pages/Expences";
 
 function AppRoutes() {
   return (
@@ -15,6 +17,8 @@ function AppRoutes() {
       <Route path="/register" element={<Register/>} />
       <Route path="/income-sectors" element={<IncomeSectors />} />
       <Route path="/incomes" element={<Incomes />} />
+      <Route path="/expence-sectors" element={<ExpenceSectors />} />
+      <Route path="/expences" element={<Expences />} />
     </Routes>
   );
 }

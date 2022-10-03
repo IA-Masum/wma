@@ -97,22 +97,22 @@ function TopNav() {
                     </li>
 
                     <li className="menu-list-item">
-                      <a href="#" className="menu-link">
+                      <NavLink to="/expence-sectors" className="menu-link">
                         <FontAwesomeIcon
                           icon={faFileInvoiceDollar}
                           style={{ marginRight: 10 }}
                         />
                         Expence Sectors
-                      </a>
+                      </NavLink>
                     </li>
                     <li className="menu-list-item">
-                      <a href="#" className="menu-link">
+                      <NavLink to="/expences" className="menu-link">
                         <FontAwesomeIcon
                           icon={faDollar}
                           style={{ marginRight: 10 }}
                         />
                         Expences
-                      </a>
+                      </NavLink>
                     </li>
 
                     <li className="menu-list-item">
