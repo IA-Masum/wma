@@ -7,6 +7,7 @@ import ProfilePage from "./Pages/ProfilePage";
 import Register from "./Pages/Register";
 import ExpenceSectors from "./Pages/ExpenceSectors";
 import Expences from "./Pages/Expences";
+import LoanSectors from "./Pages/LoanSectors";
 
 function AppRoutes() {
   return (
@@ -19,6 +20,7 @@ function AppRoutes() {
       <Route path="/incomes" element={<Incomes />} />
       <Route path="/expence-sectors" element={<ExpenceSectors />} />
       <Route path="/expences" element={<Expences />} />
+      <Route path="/loan-sectors" element={<LoanSectors />} />
     </Routes>
   );
 }
