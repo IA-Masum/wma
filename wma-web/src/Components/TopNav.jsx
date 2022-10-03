@@ -87,13 +87,13 @@ function TopNav() {
                     </li>
 
                     <li className="menu-list-item">
-                      <a href="#" className="menu-link">
+                      <NavLink to="/incomes" className="menu-link">
                         <FontAwesomeIcon
                           icon={faAnchor}
                           style={{ marginRight: 10 }}
                         />
                         Incomes
-                      </a>
+                      </NavLink>
                     </li>
 
                     <li className="menu-list-item">

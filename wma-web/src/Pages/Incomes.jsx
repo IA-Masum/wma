@@ -1,6 +1,5 @@
 import {
   faEdit,
-  faPenAlt,
   faPlusCircle,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -14,24 +13,20 @@ import DeleteModal from "../Components/DeleteModal";
 import FullPageLoader from "../Components/FullPageLoader";
 import TopNav from "../Components/TopNav";
 import { AuthContext } from "../Contexts/AuthContext";
+import { IncomeContext } from "../Contexts/IncomeContext";
 import { IncomeSectorContext } from "../Contexts/IncomeSectorContext";
 
-function IncomeSectors() {
+function Incomes() {
   const { user, loadUser } = useContext(AuthContext);
-  const {
-    loading,
-    incomeSectors,
-    loadIncomeSectors,
-    addIncomeSector,
-    deleteIncomeSector,
-    editIncomeSector,
-  } = useContext(IncomeSectorContext);
+  const { incomeSectors, loadIncomeSectors } = useContext(IncomeSectorContext);
+
+  const { loading, incomes, loadIncomes, addIncome, deleteIncome } =
+    useContext(IncomeContext);
   const shouldCall = useRef(true);
-  const [showAddEditModal, setShowAddEditModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [name, setName] = useState("");
   const [workingID, setWorkingID] = useState(null);
-  const [actionName, setActionName] = useState("Add");
+
 
   useEffect(() => {
     if (shouldCall.current) {
@@ -40,50 +35,29 @@ function IncomeSectors() {
         loadUser();
       }
 
+      if (incomes.length <= 0) {
+        loadIncomes();
+      }
+
       if (incomeSectors.length <= 0) {
         loadIncomeSectors();
       }
     }
   }, []);
 
-  const submitHandler = (sectorName) => {
-    if (actionName === "Add") {
-      addIncomeSector(sectorName, () => {
-        setShowAddEditModal(false);
-        setActionName("Add");
-        setName("");
-        setWorkingID(null);
-      });
-    } else if (actionName === "Edit") {
-      editIncomeSector(workingID, sectorName, () => {
-        setShowAddEditModal(false);
-        setActionName("Add");
-        setName("");
-        setWorkingID(null);
-      });
-    }
+  const submitHandler = (income) => {
+    addIncome(income, () => {
+      setShowAddModal(false);
+    });
   };
 
   const handleDelete = () => {
-    deleteIncomeSector(workingID, () => {
+    deleteIncome(workingID, () => {
       setShowDeleteModal(false);
       setWorkingID(null);
     });
   };
 
-  const showAddModal = () => {
-    setShowAddEditModal(true);
-    setActionName("Add");
-    setName("");
-    setWorkingID(null);
-  };
-
-  const showEditModal = (s) => {
-    setShowAddEditModal(true);
-    setActionName("Edit");
-    setName(s.name);
-    setWorkingID(s.id);
-  };
   const showDeleteModalHandler = (id) => {
     setWorkingID(id);
     setShowDeleteModal(true);
@@ -99,41 +73,29 @@ function IncomeSectors() {
           <div className="page bg-light pt-2">
             <Container>
               <div className="d-flex justify-content-between align-items-center my-1 border rounded p-2">
-                <h4 className="mb-0">Income Sectors</h4>
+                <h4 className="mb-0">Incomes</h4>
                 <button
-                  onClick={showAddModal}
+                  onClick={() => setShowAddModal(true)}
                   className="btn btn-success btn-sm"
                 >
                   <FontAwesomeIcon icon={faPlusCircle} />
                 </button>
               </div>
-              <div className="d-flex justify-content-between align-items-center my-1 border rounded p-2">
-                <div className="w-100">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="form-control"
-                  />
-                </div>
-              </div>
-
               <hr />
-              {incomeSectors.map((sec) => (
-                <Sector
-                  data={sec}
-                  key={sec.id}
-                  showEditModal={showEditModal}
+              {incomes.map((inc) => (
+                <SingleIncome
+                  data={inc}
+                  key={inc.id}
                   showDeleteModalHandler={showDeleteModalHandler}
                 />
               ))}
             </Container>
           </div>
-          <AddEditModal
-            show={showAddEditModal}
-            setShowAddEditModal={setShowAddEditModal}
-            name={name}
-            actionName={actionName}
+          <AddModal
+            show={showAddModal}
+            setShowAddModal={setShowAddModal}
             submitHandler={submitHandler}
+            incomeSectors={incomeSectors}
           />
           <DeleteModal
             show={showDeleteModal}
@@ -146,20 +108,14 @@ function IncomeSectors() {
     </>
   );
 }
+export default Incomes;
 
-export default IncomeSectors;
-
-const Sector = ({ data, showEditModal, showDeleteModalHandler }) => {
+const SingleIncome = ({ data, showDeleteModalHandler }) => {
   return (
     <div className="bg-white p-2 rounded shadow-sm mb-2">
       <div className="mb-2 clearfix">
-        <strong className="float-start">{data.name}</strong>
+        <strong className="float-start">{data.amount} tk</strong>
         <div className="float-end">
-          <FontAwesomeIcon
-            onClick={() => showEditModal(data)}
-            icon={faEdit}
-            className="mx-3 text-success"
-          />
           <FontAwesomeIcon
             onClick={() => showDeleteModalHandler(data.id)}
             icon={faTrash}
@@ -169,60 +125,82 @@ const Sector = ({ data, showEditModal, showDeleteModalHandler }) => {
       </div>
       <div className="clearfix text-muted">
         <small className="float-start">
-          From: {moment(data.created_at).format("ll")}
+          Added: {moment(data.created_at).format("ll")}
         </small>
-        <small className="float-end">Total: {data.total_income} tk</small>
+        <small className="float-end">Sector: {data.income_sector_id}</small>
       </div>
     </div>
   );
 };
 
-function AddEditModal({
-  show,
-  setShowAddEditModal,
-  name,
-  actionName,
-  submitHandler,
-}) {
-  const [sectorName, setSectorName] = useState(name);
+function AddModal({ show, setShowAddModal, submitHandler, incomeSectors }) {
+  const [income, setIncome] = useState({});
   const onChangeHandler = (e) => {
-    setSectorName(e.target.value);
+    setIncome((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  useEffect(() => {
-    setSectorName(name);
-  }, [name]);
+  const handleClose = () => {
+    setShowAddModal(false);
+    setIncome({});
+  };
 
   return (
     <Modal
       show={show}
-      onHide={() => setShowAddEditModal(false)}
+      onHide={handleClose}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {actionName} Income Sector
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Add Income</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <FormGroup>
-          <label htmlFor="name">Name</label>
+          <label htmlFor="income_sector_id">Income Sector</label>
+          <select
+            id="income_sector_id"
+            className="form-control form-select mt-2"
+            onChange={onChangeHandler}
+            defaultValue={income.income_sector_id}
+            value={income.income_sector_id}
+          >
+            <option value="">SELECT</option>
+            {incomeSectors.map((sec) => (
+              <option key={sec.id} value={sec.id}>
+                {sec.name}
+              </option>
+            ))}
+          </select>
+        </FormGroup>
+        <FormGroup className="mt-2">
+          <label htmlFor="amount">Amount</label>
+          <input
+            type="number"
+            step="0.001"
+            id="amount"
+            className="form-control"
+            onChange={onChangeHandler}
+            value={income.amount}
+          />
+        </FormGroup>
+
+        <FormGroup className="mt-2">
+          <label htmlFor="source">Source</label>
           <input
             type="text"
-            className="form-control mt-2"
-            id="name"
+            id="source"
+            className="form-control"
             onChange={onChangeHandler}
-            value={sectorName}
+            value={income.source}
           />
         </FormGroup>
       </Modal.Body>
       <Modal.Footer>
         <button
-          onClick={() => submitHandler(sectorName)}
+          onClick={() => submitHandler(income)}
           className="btn btn-success w-100"
         >
-          {actionName}
+          Add
         </button>
       </Modal.Footer>
     </Modal>
