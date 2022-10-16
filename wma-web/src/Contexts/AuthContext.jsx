@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }) => {
       })
       .catch((err) => {
         if (err.response) {
-          if (err.response.status === 401) {
+          if (err.response.status === 401 || err.response.status === 409 ) {
             setLoading(false);
             removeToken();
             navigate("/login");

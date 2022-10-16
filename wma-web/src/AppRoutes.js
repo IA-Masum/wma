@@ -8,6 +8,7 @@ import Register from "./Pages/Register";
 import ExpenceSectors from "./Pages/ExpenceSectors";
 import Expences from "./Pages/Expences";
 import LoanSectors from "./Pages/LoanSectors";
+import Loans from "./Pages/Loans";
 
 function AppRoutes() {
   return (
@@ -21,6 +22,7 @@ function AppRoutes() {
       <Route path="/expence-sectors" element={<ExpenceSectors />} />
       <Route path="/expences" element={<Expences />} />
       <Route path="/loan-sectors" element={<LoanSectors />} />
+      <Route path="/loans" element={<Loans />} />
     </Routes>
   );
 }
